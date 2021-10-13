@@ -150,10 +150,10 @@ Copyright (C) 2021 Takayuki Sato
 This program is free software under MIT License.
 See the file LICENSE in this distribution for more details.
 
-[repo-url]: https://github.com/sttk-go/error
-[ci-img]: https://github.com/sttk-go/error/actions/workflows/go.yml/badge.svg?branch=main
-[ci-url]: https://github.com/sttk-go/error/actions
-[pkg-dev-img]: https://pkg.go.dev/badge/github.com/sttk-go/error.svg
-[pkg-dev-url]: https://pkg.go.dev/github.com/sttk-go/error
+[repo-url]: https://github.com/sttk-go/reasonederror
+[ci-img]: https://github.com/sttk-go/reasonederror/actions/workflows/go.yml/badge.svg?branch=main
+[ci-url]: https://github.com/sttk-go/reasonederror/actions
+[pkg-dev-img]: https://pkg.go.dev/badge/github.com/sttk-go/reasonederror.svg
+[pkg-dev-url]: https://pkg.go.dev/github.com/sttk-go/reasonederror
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
 [mit-url]: https://opensource.org/licenses/MIT
