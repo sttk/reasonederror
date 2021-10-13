@@ -1,4 +1,4 @@
-# [sttk-go/error][repo-url] [![Go Reference][pkg-dev-img]][pkg-dev-url] [![CI Status][ci-img]][ci-url] [![MIT License][mit-img]][mit-url]
+# [sttk-go/reasonederror][repo-url] [![Go Reference][pkg-dev-img]][pkg-dev-url] [![CI Status][ci-img]][ci-url] [![MIT License][mit-img]][mit-url]
 
 
 The error processing library for Go.
@@ -14,7 +14,7 @@ The error processing library for Go.
 <a name="what-is-this"></a>
 ## What is this?
 
-`github.com/sttk-go/error` is a library for error processes in Go program.
+`github.com/sttk-go/reasonederror` is a library for error processes in Go program.
 
 The central type of this library is `ReasonedError`.
 This structure type takes any structure value/pointer as a reason of an error.
@@ -62,7 +62,7 @@ This section explains the usage of functions, structure types, and methods in th
 First, imports `reasonederror` package as follows:
 
 ```
-import "github.com/sttk-go/error/reasonederror"
+import "github.com/sttk-go/reasonederror"
 ```
 
 Next, defines structure types which represent reasons of errors.
@@ -116,10 +116,10 @@ These functions are effective only before calling `FixConfiguration` function.
 Creation handlers should be registered in start-up process of an application.
 
 ```
-reasonederror.AddSyncHandler(func(re ReasonedError, dttm time.Time) {
+reasonederror.AddSyncHandler(func(re reasonederror.ReasonedError, dttm time.Time) {
     // (1)
 })
-reasonederror.AddAsyncHandler(func(re ReasonedError, dttm time.Time) {
+reasonederror.AddAsyncHandler(func(re reasonederror.ReasonedError, dttm time.Time) {
     // (2)
 })
 reasonederror.FixConfiguration() // fixes configuration to disable to add more handlers.
