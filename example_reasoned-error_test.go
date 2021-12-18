@@ -76,21 +76,21 @@ func ExampleReasonedError_Error() {
 	// reason=FailToDoSomething, Param1=ABC, Param2=123, cause=Causal error
 }
 
-func ExampleReasonedError_File() {
+func ExampleReasonedError_FileName() {
 	type FailToDoSomething struct{}
 
 	re := reasonederror.By(FailToDoSomething{})
-	fmt.Printf("%v\n", re.File())
+	fmt.Printf("%v\n", re.FileName())
 
 	// Output:
 	// example_reasoned-error_test.go
 }
 
-func ExampleReasonedError_Line() {
+func ExampleReasonedError_LineNumber() {
 	type FailToDoSomething struct{}
 
 	re := reasonederror.By(FailToDoSomething{})
-	fmt.Printf("%v\n", re.Line())
+	fmt.Printf("%v\n", re.LineNumber())
 
 	// Output:
 	// 92

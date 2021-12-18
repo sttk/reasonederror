@@ -22,13 +22,13 @@ func TestBy_reasonIsValue(t *testing.T) {
 	}
 
 	ex1 := "reasoned-error_test.go"
-	if re.File() != ex1 {
-		t.Errorf("re.File() = %v (differ from %v)\n", re.File(), ex1)
+	if re.FileName() != ex1 {
+		t.Errorf("re.FileName() = %v (differ from %v)\n", re.FileName(), ex1)
 	}
 
 	ex2 := 15
-	if re.Line() != ex2 {
-		t.Errorf("re.Line() = %v (differ from %v)\n", re.Line(), ex2)
+	if re.LineNumber() != ex2 {
+		t.Errorf("re.LineNumber() = %v (differ from %v)\n", re.LineNumber(), ex2)
 	}
 
 	switch re.Reason().(type) {
@@ -70,13 +70,13 @@ func TestBy_reasonIsPointer(t *testing.T) {
 	}
 
 	ex1 := "reasoned-error_test.go"
-	if re.File() != ex1 {
-		t.Errorf("re.File() = %v (differ from %v)\n", re.File(), ex1)
+	if re.FileName() != ex1 {
+		t.Errorf("re.FileName() = %v (differ from %v)\n", re.FileName(), ex1)
 	}
 
 	ex2 := 63
-	if re.Line() != ex2 {
-		t.Errorf("re.Line() = %v (differ from %v)\n", re.Line(), ex2)
+	if re.LineNumber() != ex2 {
+		t.Errorf("re.LineNumber() = %v (differ from %v)\n", re.LineNumber(), ex2)
 	}
 
 	switch re.Reason().(type) {
