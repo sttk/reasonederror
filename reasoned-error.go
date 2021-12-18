@@ -114,15 +114,15 @@ func (re ReasonedError) SituationValue(name string) interface{} {
 	return nil
 }
 
-// File method returns the base name of the source file where this error was
+// FileName method returns the the source file name where this error was
 // caused.
-func (re ReasonedError) File() string {
+func (re ReasonedError) FileName() string {
 	return re.file
 }
 
-// Line method returns the line number in the source file where this error was
-// caused.
-func (re ReasonedError) Line() int {
+// LineNumber method returns the line number in the source file where this
+// error was caused.
+func (re ReasonedError) LineNumber() int {
 	return re.line
 }
 
