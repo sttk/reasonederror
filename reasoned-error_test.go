@@ -1,6 +1,7 @@
 package reasonederror_test
 
 import (
+	"github.com/stretchr/testify/assert"
 	"github.com/sttk-go/reasonederror"
 	"testing"
 )
@@ -14,22 +15,9 @@ type /* Error */ (
 func TestBy_reasonIsValue(t *testing.T) {
 	re := reasonederror.By(InvalidValue{Value: "abc"})
 
-	// t.Logf("re = %v\n", re)
-
-	ex0 := "reason=InvalidValue, Value=abc"
-	if re.Error() != ex0 {
-		t.Errorf("re.Error() = %v (differ from %v)\n", re.Error(), ex0)
-	}
-
-	ex1 := "reasoned-error_test.go"
-	if re.FileName() != ex1 {
-		t.Errorf("re.FileName() = %v (differ from %v)\n", re.FileName(), ex1)
-	}
-
-	ex2 := 15
-	if re.LineNumber() != ex2 {
-		t.Errorf("re.LineNumber() = %v (differ from %v)\n", re.LineNumber(), ex2)
-	}
+	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc")
+	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
+	assert.Equal(t, re.LineNumber(), 16)
 
 	switch re.Reason().(type) {
 	case InvalidValue:
@@ -37,47 +25,26 @@ func TestBy_reasonIsValue(t *testing.T) {
 		t.Errorf("re.Reason() = %v\n", re.Reason())
 	}
 
-	ex3 := "InvalidValue"
-	if re.ReasonName() != ex3 {
-		t.Errorf("re.ReasonName() = %v (differ from %v)\n", re.ReasonName(), ex3)
-	}
-
-	ex4 := "github.com/sttk-go/reasonederror_test"
-	if re.ReasonPackage() != ex4 {
-		t.Errorf("re.ReasonPackage() = %v (differ from %v)\n", re.ReasonPackage(), ex4)
-	}
+	assert.Equal(t, re.ReasonName(), "InvalidValue")
+	assert.Equal(t, re.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, re.SituationValue("Value"), "abc")
+	assert.Nil(t, re.SituationValue("value"))
 
 	m := re.Situation()
-	ex5 := 1
-	if len(m) != ex5 {
-		t.Errorf("re.Situation():len = %v (differ from %v)\n", len(m), ex5)
-	}
+	assert.Equal(t, len(m), 1)
+	assert.Equal(t, m["Value"], "abc")
+	assert.Nil(t, m["value"])
 
-	ex6 := "abc"
-	if m["Value"] != ex6 {
-		t.Errorf("re.Situation():[\"Value\"] = %v (differ from %v)\n", m["Value"], ex6)
-	}
+	assert.Nil(t, re.Cause())
+	assert.Nil(t, re.Unwrap())
 }
 
 func TestBy_reasonIsPointer(t *testing.T) {
 	re := reasonederror.By(&InvalidValue{Value: "abc"})
 
-	//t.Logf("re = %v\n", re)
-
-	ex0 := "reason=InvalidValue, Value=abc"
-	if re.Error() != ex0 {
-		t.Errorf("re.Error() = %v (differ from %v)\n", re.Error(), ex0)
-	}
-
-	ex1 := "reasoned-error_test.go"
-	if re.FileName() != ex1 {
-		t.Errorf("re.FileName() = %v (differ from %v)\n", re.FileName(), ex1)
-	}
-
-	ex2 := 63
-	if re.LineNumber() != ex2 {
-		t.Errorf("re.LineNumber() = %v (differ from %v)\n", re.LineNumber(), ex2)
-	}
+	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc")
+	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
+	assert.Equal(t, re.LineNumber(), 43)
 
 	switch re.Reason().(type) {
 	case *InvalidValue:
@@ -85,33 +52,16 @@ func TestBy_reasonIsPointer(t *testing.T) {
 		t.Errorf("re.Reason() = %v\n", re.Reason())
 	}
 
-	ex3 := "InvalidValue"
-	if re.ReasonName() != ex3 {
-		t.Errorf("re.ReasonName() = %v (differ from %v)\n", re.ReasonName(), ex3)
-	}
-
-	ex4 := "github.com/sttk-go/reasonederror_test"
-	if re.ReasonPackage() != ex4 {
-		t.Errorf("re.ReasonPackage() = %v (differ from %v)\n", re.ReasonPackage(), ex4)
-	}
+	assert.Equal(t, re.ReasonName(), "InvalidValue")
+	assert.Equal(t, re.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, re.SituationValue("Value"), "abc")
+	assert.Nil(t, re.SituationValue("value"))
 
 	m := re.Situation()
-	ex5 := 1
-	if len(m) != ex5 {
-		t.Errorf("re.Situation():len = %v (differ from %v)\n", len(m), ex5)
-	}
-	ex6 := "abc"
-	if m["Value"] != ex6 {
-		t.Errorf("re.Situation():[\"Value\"] = %v (differ from %v)\n", m["Value"], ex6)
-	}
+	assert.Equal(t, len(m), 1)
+	assert.Equal(t, m["Value"], "abc")
+	assert.Nil(t, m["value"])
 
-	ex7 := "abc"
-	if re.SituationValue("Value") != ex7 {
-		t.Errorf("re.SituationValue(\"Value\") = %v (differ from %v)\n", re.SituationValue("Value"), ex7)
-	}
-
-	var ex8 interface{} = nil
-	if re.SituationValue("Xxx") != ex8 {
-		t.Errorf("re.SituationValue(\"Value\") = %v (differ from %v)\n", re.SituationValue("Value"), ex8)
-	}
+	assert.Nil(t, re.Cause())
+	assert.Nil(t, re.Unwrap())
 }
