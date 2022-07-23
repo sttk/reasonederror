@@ -2,6 +2,7 @@ package reasonederror
 
 import (
 	"container/list"
+	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
 	"time"
@@ -21,12 +22,8 @@ func TestAddSyncHandler_zeroHandler(t *testing.T) {
 	clearHandlers()
 	defer clearHandlers()
 
-	if syncHandlers.head != nil {
-		t.Errorf("syncHandlers.head should be nil but: %v.\n", syncHandlers.head)
-	}
-	if syncHandlers.last != nil {
-		t.Errorf("syncHandlers.last should be nil but: %v.\n", syncHandlers.last)
-	}
+	assert.Nil(t, syncHandlers.head)
+	assert.Nil(t, syncHandlers.last)
 }
 
 func TestAddSyncHandler_oneHandler(t *testing.T) {
@@ -35,23 +32,14 @@ func TestAddSyncHandler_oneHandler(t *testing.T) {
 
 	AddSyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if syncHandlers.head == nil {
-		t.Errorf("syncHandlers.head should not be nil.\n")
-	}
-	if syncHandlers.head != syncHandlers.last {
-		t.Errorf("syncHandlers.head should be equal to .last.\n")
-	}
-	if syncHandlers.head.handler == nil {
-		t.Errorf("syncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, syncHandlers.head)
+	assert.Equal(t, syncHandlers.head, syncHandlers.last)
+	assert.NotNil(t, syncHandlers.head.handler)
 
 	typ := reflect.TypeOf(syncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of syncHandlers.head.handler: %v.\n", typ)
-	}
-	if syncHandlers.last.next != nil {
-		t.Errorf("syncHandlers.last.next should be nil: %v.\n", syncHandlers.head.next)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
+
+	assert.Nil(t, syncHandlers.last.next)
 }
 
 func TestAddSyncHandler_twoHandlers(t *testing.T) {
@@ -61,45 +49,27 @@ func TestAddSyncHandler_twoHandlers(t *testing.T) {
 	AddSyncHandler(func(re ReasonedError, dttm time.Time) {})
 	AddSyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if syncHandlers.head == nil {
-		t.Errorf("syncHandlers.head should not be nil.\n")
-	}
-	if syncHandlers.head.next != syncHandlers.last {
-		t.Errorf("syncHandlers.head.next should be equal to .last.\n")
-	}
-	if syncHandlers.head.handler == nil {
-		t.Errorf("syncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, syncHandlers.head)
+	assert.NotEqual(t, syncHandlers.head, syncHandlers.last)
+	assert.NotNil(t, syncHandlers.head.handler)
 
 	typ := reflect.TypeOf(syncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of syncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if syncHandlers.head.next.handler == nil {
-		t.Errorf("syncHandlers.head.next.handler should not be nil.\n")
-	}
+	assert.NotNil(t, syncHandlers.head.next)
 
 	typ = reflect.TypeOf(syncHandlers.head.next.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of syncHandlers.head.next.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if syncHandlers.last.next != nil {
-		t.Errorf("syncHandlers.last.next should be nil: %v.\n", syncHandlers.head.next)
-	}
+	assert.Nil(t, syncHandlers.last.next)
 }
 
 func TestAddAsyncHandler_zeroHandler(t *testing.T) {
 	clearHandlers()
 	defer clearHandlers()
 
-	if asyncHandlers.head != nil {
-		t.Errorf("asyncHandlers.head should be nil but: %v.\n", asyncHandlers.head)
-	}
-	if asyncHandlers.last != nil {
-		t.Errorf("asyncHandlers.last should be nil but: %v.\n", asyncHandlers.last)
-	}
+	assert.Nil(t, asyncHandlers.head)
+	assert.Nil(t, asyncHandlers.last)
 }
 
 func TestAddAsyncHandler_oneHandler(t *testing.T) {
@@ -108,24 +78,14 @@ func TestAddAsyncHandler_oneHandler(t *testing.T) {
 
 	AddAsyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if asyncHandlers.head == nil {
-		t.Errorf("asyncHandlers.head should not be nil.\n")
-	}
-	if asyncHandlers.head != asyncHandlers.last {
-		t.Errorf("asyncHandlers.head should be equal to .last.\n")
-	}
-	if asyncHandlers.head.handler == nil {
-		t.Errorf("asyncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, asyncHandlers.head)
+	assert.Equal(t, asyncHandlers.head, asyncHandlers.last)
+	assert.NotNil(t, asyncHandlers.head.handler)
 
 	typ := reflect.TypeOf(asyncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of asyncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if asyncHandlers.last.next != nil {
-		t.Errorf("asyncHandlers.last.next should be nil, but: %v.\n", asyncHandlers.last.next)
-	}
+	assert.Nil(t, asyncHandlers.last.next)
 }
 
 func TestAddAsyncHandler_twoHandlers(t *testing.T) {
@@ -135,34 +95,19 @@ func TestAddAsyncHandler_twoHandlers(t *testing.T) {
 	AddAsyncHandler(func(re ReasonedError, dttm time.Time) {})
 	AddAsyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if asyncHandlers.head == nil {
-		t.Errorf("asyncHandlers.head should not be nil.\n")
-	}
-	if asyncHandlers.head.next != asyncHandlers.last {
-		t.Errorf("asyncHandlers.head.next should be equal to .last.\n")
-	}
-
-	if asyncHandlers.head.handler == nil {
-		t.Errorf("asyncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, asyncHandlers.head)
+	assert.NotEqual(t, asyncHandlers.head, asyncHandlers.last)
+	assert.NotNil(t, asyncHandlers.head.handler)
 
 	typ := reflect.TypeOf(asyncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of asyncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if asyncHandlers.head.next.handler == nil {
-		t.Errorf("asyncHandlers.head.next.handler should not be nil.\n")
-	}
+	assert.NotNil(t, asyncHandlers.head.next)
 
 	typ = reflect.TypeOf(asyncHandlers.head.next.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of asyncHandlers.head.next.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if asyncHandlers.last.next != nil {
-		t.Errorf("asyncHandlers.last.next should be nil: %v.\n", asyncHandlers.head.next)
-	}
+	assert.Nil(t, asyncHandlers.last.next)
 }
 
 func TestFixConfiguration(t *testing.T) {
@@ -172,86 +117,46 @@ func TestFixConfiguration(t *testing.T) {
 	AddSyncHandler(func(re ReasonedError, dttm time.Time) {})
 	AddAsyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if syncHandlers.head == nil {
-		t.Errorf("syncHandlers.head should not be nil.\n")
-	}
-	if syncHandlers.head != syncHandlers.last {
-		t.Errorf("syncHandlers.head should be equal to .last.\n")
-	}
-	if syncHandlers.head.handler == nil {
-		t.Errorf("syncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, syncHandlers.head)
+	assert.NotNil(t, syncHandlers.head, syncHandlers.last)
+	assert.NotNil(t, syncHandlers.head.handler)
 
 	typ := reflect.TypeOf(syncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of syncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if syncHandlers.last.next != nil {
-		t.Errorf("syncHandlers.last.next should be nil: %v.\n", syncHandlers.head.next)
-	}
+	assert.Nil(t, syncHandlers.last.next)
 
-	if asyncHandlers.head == nil {
-		t.Errorf("asyncHandlers.head should not be nil.\n")
-	}
-	if asyncHandlers.head != asyncHandlers.last {
-		t.Errorf("asyncHandlers.head should be equal to .last.\n")
-	}
-	if asyncHandlers.head.handler == nil {
-		t.Errorf("asyncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, asyncHandlers.head)
+	assert.NotNil(t, asyncHandlers.head, asyncHandlers.last)
+	assert.NotNil(t, asyncHandlers.head.handler)
 
 	typ = reflect.TypeOf(asyncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of asyncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if asyncHandlers.last.next != nil {
-		t.Errorf("asyncHandlers.last.next should be nil: %v.\n", asyncHandlers.head.next)
-	}
+	assert.Nil(t, asyncHandlers.last.next)
 
 	FixConfiguration()
 
 	AddSyncHandler(func(re ReasonedError, dttm time.Time) {})
 	AddAsyncHandler(func(re ReasonedError, dttm time.Time) {})
 
-	if syncHandlers.head == nil {
-		t.Errorf("syncHandlers.head should not be nil.\n")
-	}
-	if syncHandlers.head != syncHandlers.last {
-		t.Errorf("syncHandlers.head should be equal to .last.\n")
-	}
-	if syncHandlers.head.handler == nil {
-		t.Errorf("syncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, syncHandlers.head)
+	assert.NotNil(t, syncHandlers.head, asyncHandlers.last)
+	assert.NotNil(t, syncHandlers.head.handler)
 
 	typ = reflect.TypeOf(syncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of syncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if syncHandlers.last.next != nil {
-		t.Errorf("syncHandlers.last.next should be nil: %v.\n", syncHandlers.head.next)
-	}
+	assert.Nil(t, syncHandlers.last.next)
 
-	if asyncHandlers.head == nil {
-		t.Errorf("asyncHandlers.head should not be nil.\n")
-	}
-	if asyncHandlers.head != asyncHandlers.last {
-		t.Errorf("asyncHandlers.head should be equal to .last.\n")
-	}
-	if asyncHandlers.head.handler == nil {
-		t.Errorf("asyncHandlers.head.handler should not be nil.\n")
-	}
+	assert.NotNil(t, asyncHandlers.head)
+	assert.NotNil(t, asyncHandlers.head, asyncHandlers.last)
+	assert.NotNil(t, asyncHandlers.head.handler)
 
 	typ = reflect.TypeOf(asyncHandlers.head.handler)
-	if typ.String() != "func(reasonederror.ReasonedError, time.Time)" {
-		t.Errorf("Type of asyncHandlers.head.handler: %v.\n", typ)
-	}
+	assert.Equal(t, typ.String(), "func(reasonederror.ReasonedError, time.Time)")
 
-	if asyncHandlers.last.next != nil {
-		t.Errorf("asyncHandlers.last.next should be nil: %v.\n", asyncHandlers.head.next)
-	}
+	assert.Nil(t, asyncHandlers.last.next)
 }
 
 func TestNotify_withNoHandler(t *testing.T) {
@@ -260,17 +165,13 @@ func TestNotify_withNoHandler(t *testing.T) {
 
 	By(FailToDoSomething{})
 
-	if isFixed {
-		t.Errorf("isFixed should be false but: %v.\n", isFixed)
-	}
+	assert.False(t, isFixed)
 
 	FixConfiguration()
 
 	By(FailToDoSomething{})
 
-	if !isFixed {
-		t.Errorf("isFixed should be true but: %v.\n", isFixed)
-	}
+	assert.True(t, isFixed)
 }
 
 func TestNotify_withHandlers(t *testing.T) {
@@ -292,39 +193,21 @@ func TestNotify_withHandlers(t *testing.T) {
 
 	By(FailToDoSomething{})
 
-	if isFixed {
-		t.Errorf("isFixed should be false but: %v.\n", isFixed)
-	}
-	if syncLogs.Len() != 0 {
-		t.Errorf("The size of syncLogs should be zero because not calling FixConfiguration.\n")
-	}
-	if asyncLogs.Len() != 0 {
-		t.Errorf("The size of asyncLogs should be zero because not calling FixConfiguration.\n")
-	}
+	assert.False(t, isFixed)
+	assert.Equal(t, syncLogs.Len(), 0)
+	assert.Equal(t, asyncLogs.Len(), 0)
 
 	FixConfiguration()
 
 	By(FailToDoSomething{})
 
-	if !isFixed {
-		t.Errorf("isFixed should be true but: %v.\n", isFixed)
-	}
-	if syncLogs.Len() != 2 {
-		t.Errorf("The size of syncLogs should be 2 but: %v.\n", syncLogs.Len())
-	}
-	if syncLogs.Front().Value != "FailToDoSomething-1" {
-		t.Errorf("syncLogs[0]=%v.\n", syncLogs.Front().Value)
-	}
-	if syncLogs.Front().Next().Value != "FailToDoSomething-2" {
-		t.Errorf("syncLogs[1]=%v.\n", syncLogs.Front().Next().Value)
-	}
+	assert.True(t, isFixed)
+	assert.Equal(t, syncLogs.Len(), 2)
+	assert.Equal(t, syncLogs.Front().Value, "FailToDoSomething-1")
+	assert.Equal(t, syncLogs.Front().Next().Value, "FailToDoSomething-2")
 
 	time.Sleep(100 * time.Millisecond)
 
-	if asyncLogs.Len() != 1 {
-		t.Errorf("The size of asyncLogs should be 1 but: %v.\n", asyncLogs.Len())
-	}
-	if asyncLogs.Front().Value != "FailToDoSomething-3" {
-		t.Errorf("asyncLogs[0]=%v.\n", asyncLogs.Front().Value)
-	}
+	assert.Equal(t, asyncLogs.Len(), 1)
+	assert.Equal(t, asyncLogs.Front().Value, "FailToDoSomething-3")
 }
