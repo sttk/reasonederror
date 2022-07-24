@@ -19,7 +19,8 @@ type ReasonedError struct {
 	cause  error
 }
 
-// NoError is a structure type for a reason of Ok which is a global of Err and indicates no error..
+// NoError is a structure type for a reason of Ok which is a global of Err and
+// indicates no error.
 type NoError struct{}
 
 // Ok is a globak Err value which indicates no error.
@@ -84,13 +85,30 @@ func (re ReasonedError) ReasonPackage() string {
 
 // Situation method returns a map containing parameters which represent the
 // situation when this error is caused.
+// If a .cause is set and it is an ReasonedError, a returned map containes
+// parameters of .cause hierarchically.
 func (re ReasonedError) Situation() map[string]interface{} {
 	v := reflect.ValueOf(re.reason)
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
 
-	m := map[string]interface{}{}
+	var m map[string]interface{}
+
+	if re.cause != nil {
+		t := reflect.TypeOf(re.cause)
+		_, ok := t.MethodByName("Reason")
+		if ok {
+			_, ok := t.MethodByName("Situation")
+			if ok {
+				m = re.cause.(ReasonedError).Situation()
+			}
+		}
+	}
+
+	if m == nil {
+		m = make(map[string]interface{})
+	}
 
 	t := v.Type()
 	n := v.NumField()
@@ -109,20 +127,26 @@ func (re ReasonedError) Situation() map[string]interface{} {
 
 // Situation method returns a parameter value of a specified name, which
 // represents the situation when this error is caused.
+// If a .cause is set and it is an ReasonedError, this method digs to find
+// a parameter having a same name hierarchically.
 func (re ReasonedError) SituationValue(name string) interface{} {
 	v := reflect.ValueOf(re.reason)
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
 
-	t := v.Type()
-	n := v.NumField()
-	for i := 0; i < n; i++ {
-		k := t.Field(i).Name
-		if k == name {
-			f := v.Field(i)
-			if f.CanInterface() {
-				return f.Interface()
+	f := v.FieldByName(name)
+	if f.IsValid() && f.CanInterface() {
+		return f.Interface()
+	}
+
+	if re.cause != nil {
+		t := reflect.TypeOf(re.cause)
+		_, ok := t.MethodByName("Reason")
+		if ok {
+			_, ok := t.MethodByName("SituationValue")
+			if ok {
+				return re.cause.(ReasonedError).SituationValue(name)
 			}
 		}
 	}
@@ -156,7 +180,7 @@ func (re ReasonedError) Error() string {
 
 	t := v.Type()
 
-	s := "reason=" + t.Name()
+	s := "{reason=" + t.Name()
 
 	n := v.NumField()
 	for i := 0; i < n; i++ {
@@ -172,6 +196,7 @@ func (re ReasonedError) Error() string {
 		s += ", cause=" + re.cause.Error()
 	}
 
+	s += "}"
 	return s
 }
 
