@@ -19,6 +19,12 @@ type ReasonedError struct {
 	cause  error
 }
 
+// NoError is a structure type for a reason of Ok which is a global of Err and indicates no error..
+type NoError struct{}
+
+// Ok is a globak Err value which indicates no error.
+var Ok = ReasonedError{reason: NoError{}}
+
 // By function creates a new ReasonedError with a reason by a structure and a
 // cause of this error.
 // Either a value or a pointer of a structure type is fine for a reason.
@@ -39,6 +45,16 @@ func By(reason interface{}, cause ...error) ReasonedError {
 	notify(re)
 
 	return re
+}
+
+// IsOk method determines whether an Err indicates no error.
+func (err ReasonedError) IsOk() bool {
+	switch err.reason.(type) {
+	case NoError, *NoError:
+		return true
+	default:
+		return false
+	}
 }
 
 // Reason method returns the reason structure.

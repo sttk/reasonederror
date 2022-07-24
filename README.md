@@ -43,6 +43,8 @@ By defining a structure type for a reason in a package which creates its `Reason
 This function can take a value or pointer of a structure type, and can also take parameters by using fields of the structure.
 These parameters help to know a situation when an error is caused, and can get their values with `#Situation` or `#SituationValue` method.
 
+`reasonederror.Ok` is a global value of `ReasonedError`, which indicates no error.
+Since `By` function returns a `ReasondError` value, not a pointer, it is needed the way to indicate and check no error with a `ReasonedError` value. `reasonederror.Ok` just indicates it, and the method `#IsOk` can check it.
 
 ### Creation notification
 
@@ -106,6 +108,38 @@ If there is a causal error, pass it to `By` function (`ReasonedError` supports `
   }, err)
 ```
 
+To return `ReasonedError` value which indicates no error, `reasonederror.Ok` is used.
+
+```
+  return reasonederror.Ok
+```
+
+Then, there are two way to check whether a `ReasonedError` value indicates no error or not.
+One way is as follows:
+
+```
+  var re readsonederror.ReasoedError
+  re = ...
+  if re.IsOk() {
+    ...
+  } else {
+    ...
+  }
+```
+
+And another way is as follows:
+
+```
+  var re readsonederror.ReasoedError
+  re = ...
+  switch re.Reason().(type) {
+  case reasonederror.NoError, *reasonederror.NoError:
+    ...
+  default:
+    ...
+  }
+```
+
 ### Registers creation handlers
 
 By registering creation handlers with `AddSyncHandler` or `AddAsyncHandler`, these handlers are notified whenever `ReasonedError`s are created with `By` function.
@@ -135,11 +169,12 @@ This library supports Go 1.13 or later.
 
 ### Actually Checked Go versions
 
-- 1.13.15
-- 1.14.15
+- 1.18.4
+- 1.17.12
+- 1.16.15
 - 1.15.15
-- 1.16.7
-- 1.17.1
+- 1.14.15
+- 1.13.15
 
 
 <a name="license"></a>
