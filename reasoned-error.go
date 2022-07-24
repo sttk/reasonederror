@@ -180,7 +180,7 @@ func (re ReasonedError) Error() string {
 
 	t := v.Type()
 
-	s := "reason=" + t.Name()
+	s := "{reason=" + t.Name()
 
 	n := v.NumField()
 	for i := 0; i < n; i++ {
@@ -196,6 +196,7 @@ func (re ReasonedError) Error() string {
 		s += ", cause=" + re.cause.Error()
 	}
 
+	s += "}"
 	return s
 }
 

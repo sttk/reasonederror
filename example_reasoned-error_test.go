@@ -40,10 +40,10 @@ func ExampleBy() {
 	fmt.Printf("(4) %v\n", re)
 
 	// Output:
-	// (1) reason=FailToDoSomething
-	// (2) reason=FailToDoSomethingWithParams, Param1=ABC, Param2=123
-	// (3) reason=FailToDoSomething, cause=Causal error
-	// (4) reason=FailToDoSomethingWithParams, Param1=ABC, Param2=123, cause=Causal error
+	// (1) {reason=FailToDoSomething}
+	// (2) {reason=FailToDoSomethingWithParams, Param1=ABC, Param2=123}
+	// (3) {reason=FailToDoSomething, cause=Causal error}
+	// (4) {reason=FailToDoSomethingWithParams, Param1=ABC, Param2=123, cause=Causal error}
 }
 
 func ExampleReasonedError_Cause() {
@@ -73,7 +73,7 @@ func ExampleReasonedError_Error() {
 	fmt.Printf("%v\n", re.Error())
 
 	// Output:
-	// reason=FailToDoSomething, Param1=ABC, Param2=123, cause=Causal error
+	// {reason=FailToDoSomething, Param1=ABC, Param2=123, cause=Causal error}
 }
 
 func ExampleReasonedError_FileName() {

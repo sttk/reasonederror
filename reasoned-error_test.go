@@ -19,7 +19,7 @@ type /* Error */ (
 func TestBy_reasonIsValue(t *testing.T) {
 	re := reasonederror.By(InvalidValue{Value: "abc"})
 
-	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc")
+	assert.Equal(t, re.Error(), "{reason=InvalidValue, Value=abc}")
 	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
 	assert.Equal(t, re.LineNumber(), 20)
 
@@ -47,7 +47,7 @@ func TestBy_reasonIsValue(t *testing.T) {
 func TestBy_reasonIsPointer(t *testing.T) {
 	re := reasonederror.By(&InvalidValue{Value: "abc"})
 
-	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc")
+	assert.Equal(t, re.Error(), "{reason=InvalidValue, Value=abc}")
 	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
 	assert.Equal(t, re.LineNumber(), 48)
 
@@ -76,7 +76,7 @@ func TestBy_withCause(t *testing.T) {
 	cause := errors.New("def")
 	re := reasonederror.By(InvalidValue{Value: "abc"}, cause)
 
-	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc, cause=def")
+	assert.Equal(t, re.Error(), "{reason=InvalidValue, Value=abc, cause=def}")
 	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
 	assert.Equal(t, re.LineNumber(), 77)
 
@@ -106,7 +106,7 @@ func TestBy_causeIsAlsoReasonedError(t *testing.T) {
 	cause := reasonederror.By(FailToGetValue{Name: "foo"})
 	re := reasonederror.By(InvalidValue{Value: "abc"}, cause)
 
-	assert.Equal(t, re.Error(), "reason=InvalidValue, Value=abc, cause=reason=FailToGetValue, Name=foo")
+	assert.Equal(t, re.Error(), "{reason=InvalidValue, Value=abc, cause={reason=FailToGetValue, Name=foo}}")
 	assert.Equal(t, re.FileName(), "reasoned-error_test.go")
 	assert.Equal(t, re.LineNumber(), 107)
 
@@ -137,7 +137,7 @@ func TestBy_causeIsAlsoReasonedError(t *testing.T) {
 func TestOk(t *testing.T) {
 	re := reasonederror.Ok
 
-	assert.Equal(t, re.Error(), "reason=NoError")
+	assert.Equal(t, re.Error(), "{reason=NoError}")
 	assert.Equal(t, re.FileName(), "")
 	assert.Equal(t, re.LineNumber(), 0)
 
