@@ -48,7 +48,7 @@ func By(reason interface{}, cause ...error) ReasonedError {
 	return re
 }
 
-// IsOk method determines whether an Err indicates no error.
+// IsOk method determines whether an ReasonedError indicates no error.
 func (err ReasonedError) IsOk() bool {
 	switch err.reason.(type) {
 	case NoError, *NoError:
@@ -200,7 +200,7 @@ func (re ReasonedError) Error() string {
 	return s
 }
 
-// Unwrap returns an error that this error wraps.
+// Unwrap method returns an error that this error wraps.
 func (re ReasonedError) Unwrap() error {
 	return re.cause
 }
