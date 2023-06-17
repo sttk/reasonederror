@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	re "github.com/sttk-go/reasonederror"
+	re "github.com/sttk/reasonederror"
 )
 
 type /* error reasons */ (
@@ -39,7 +39,7 @@ func TestNewErr_reasonIsValue(t *testing.T) {
 	assert.False(t, err.IsOk())
 	assert.True(t, err.IsNotOk())
 	assert.Equal(t, err.ReasonName(), "InvalidValue")
-	assert.Equal(t, err.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, err.ReasonPackage(), "github.com/sttk/reasonederror_test")
 	assert.Equal(t, err.Get("Value"), "abc")
 	assert.Nil(t, err.Get("value"))
 	assert.Nil(t, err.Get("Name"))
@@ -75,7 +75,7 @@ func TestNewErr_reasonIsPointer(t *testing.T) {
 	assert.False(t, err.IsOk())
 	assert.True(t, err.IsNotOk())
 	assert.Equal(t, err.ReasonName(), "InvalidValue")
-	assert.Equal(t, err.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, err.ReasonPackage(), "github.com/sttk/reasonederror_test")
 	assert.Equal(t, err.Get("Value"), "abc")
 	assert.Nil(t, err.Get("value"))
 	assert.Nil(t, err.Get("Name"))
@@ -112,7 +112,7 @@ func TestNewErr_withCause(t *testing.T) {
 	assert.False(t, err.IsOk())
 	assert.True(t, err.IsNotOk())
 	assert.Equal(t, err.ReasonName(), "InvalidValue")
-	assert.Equal(t, err.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, err.ReasonPackage(), "github.com/sttk/reasonederror_test")
 	assert.Equal(t, err.Get("Value"), "abc")
 	assert.Nil(t, err.Get("value"))
 	assert.Nil(t, err.Get("Name"))
@@ -151,7 +151,7 @@ func TestNewErr_causeIsAlsoErr(t *testing.T) {
 	assert.False(t, err.IsOk())
 	assert.True(t, err.IsNotOk())
 	assert.Equal(t, err.ReasonName(), "InvalidValue")
-	assert.Equal(t, err.ReasonPackage(), "github.com/sttk-go/reasonederror_test")
+	assert.Equal(t, err.ReasonPackage(), "github.com/sttk/reasonederror_test")
 
 	assert.Equal(t, err.Get("Value"), "abc")
 	assert.Equal(t, err.Get("Name"), "foo")
