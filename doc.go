@@ -3,7 +3,7 @@
 // See the file LICENSE in this distribution for more details.
 
 /*
-Package github.com/sttk-go/reasonederror is for error processes in Go
+Package github.com/sttk/reasonederror is for error processes in Go
 program.
 
 This package defines Err structure type which is an error type and

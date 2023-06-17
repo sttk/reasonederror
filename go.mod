@@ -1,4 +1,4 @@
-module github.com/sttk-go/reasonederror
+module github.com/sttk/reasonederror
 
 go 1.13
 

@@ -64,7 +64,7 @@ This section explains the usage of functions, structure types, and methods in th
 First, imports `reasonederror` package as follows:
 
 ```
-import "github.com/sttk-go/reasonederror"
+import "github.com/sttk/reasonederror"
 ```
 
 Next, defines structure types which represent reasons of errors.
@@ -173,35 +173,35 @@ This library supports Go 1.13 or later.
 % gvm-fav
 Now using version go1.13.15
 go version go1.13.15 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.367s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.361s	coverage: 100.0% of statements
 
 Now using version go1.14.15
 go version go1.14.15 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.361s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.363s	coverage: 100.0% of statements
 
 Now using version go1.15.15
 go version go1.15.15 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.341s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.344s	coverage: 100.0% of statements
 
 Now using version go1.16.15
 go version go1.16.15 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.338s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.336s	coverage: 100.0% of statements
 
 Now using version go1.17.13
 go version go1.17.13 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.334s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.334s	coverage: 100.0% of statements
 
 Now using version go1.18.10
 go version go1.18.10 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.356s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.366s	coverage: 100.0% of statements
 
 Now using version go1.19.10
 go version go1.19.10 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.344s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.343s	coverage: 100.0% of statements
 
 Now using version go1.20.5
 go version go1.20.5 darwin/amd64
-ok  	github.com/sttk-go/reasonederror	0.351s	coverage: 100.0% of statements
+ok  	github.com/sttk/reasonederror	0.348s	coverage: 100.0% of statements
 
 Back to go1.20.5
 Now using version go1.20.5
@@ -219,6 +219,6 @@ See the file LICENSE in this distribution for more details.
 [ci-img]: https://github.com/sttk/reasonederror/actions/workflows/go.yml/badge.svg?branch=main
 [ci-url]: https://github.com/sttk/reasonederror/actions
 [pkg-dev-img]: https://pkg.go.dev/badge/github.com/sttk/reasonederror.svg
-[pkg-dev-url]: https://pkg.go.dev/github.com/sttk-go/reasonederror
+[pkg-dev-url]: https://pkg.go.dev/github.com/sttk/reasonederror
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
 [mit-url]: https://opensource.org/licenses/MIT

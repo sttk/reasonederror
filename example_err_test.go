@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/sttk-go/reasonederror"
+	"github.com/sttk/reasonederror"
 )
 
 func ExampleNewErr() {
@@ -165,7 +165,7 @@ func ExampleErr_ReasonPackage() {
 	fmt.Printf("%v\n", err.ReasonPackage())
 
 	// Output:
-	// github.com/sttk-go/reasonederror_test
+	// github.com/sttk/reasonederror_test
 }
 
 func ExampleErr_Situation() {

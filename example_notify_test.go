@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sttk-go/reasonederror"
+	"github.com/sttk/reasonederror"
 )
 
 func ExampleAddAsyncErrHandler() {
