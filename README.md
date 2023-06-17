@@ -215,9 +215,9 @@ Copyright (C) 2021-2023 Takayuki Sato
 This program is free software under MIT License.
 See the file LICENSE in this distribution for more details.
 
-[repo-url]: https://github.com/sttk/reasonederror
-[ci-img]: https://github.com/sttk/reasonederror/actions/workflows/go.yml/badge.svg?branch=main
-[ci-url]: https://github.com/sttk/reasonederror/actions
+[repo-url]: https://github.com/sttk/reasonederror-go
+[ci-img]: https://github.com/sttk/reasonederror-go/actions/workflows/go.yml/badge.svg?branch=main
+[ci-url]: https://github.com/sttk/reasonederror-go/actions
 [pkg-dev-img]: https://pkg.go.dev/badge/github.com/sttk/reasonederror.svg
 [pkg-dev-url]: https://pkg.go.dev/github.com/sttk/reasonederror
 [mit-img]: https://img.shields.io/badge/license-MIT-green.svg
