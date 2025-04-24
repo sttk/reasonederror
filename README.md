@@ -1,5 +1,6 @@
 # [reasonederror][repo-url] [![Go Reference][pkg-dev-img]][pkg-dev-url] [![CI Status][ci-img]][ci-url] [![MIT License][mit-img]][mit-url]
 
+> **This repository has been archived. Plese use [errs](https://github.com/sttk/errs) instead, which provides a similar implementation.**
 
 The error processing library for Go.
 
